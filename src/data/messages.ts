@@ -1,3 +1,5 @@
+export const SENDER = "Shivam Singh";
+
 export type Card = { name: string; message: string; featured?: boolean };
 
 export const CARDS: Card[] = [

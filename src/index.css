@@ -3,7 +3,50 @@
 @tailwind utilities;
 
 html { scroll-behavior: smooth; }
-body { @apply bg-cream text-brown font-body antialiased; background-image: radial-gradient(circle at 20% 0%, #FFE7BE 0%, transparent 55%), radial-gradient(circle at 90% 30%, #FFD9A0 0%, transparent 50%); }
-.font-display { font-family: 'Playfair Display', serif; }
-@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+body { @apply bg-sun text-cocoa font-body antialiased; }
+
+/* Story-panel sunburst (rays from centre) */
+.sunburst {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,240,170,.85) 0%, rgba(255,240,170,0) 60%),
+    repeating-conic-gradient(from 0deg at 50% 45%, #FDB022 0deg 9deg, #F9A21B 9deg 18deg);
+}
+.sunburst-dark {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(120,60,35,.9) 0%, rgba(74,36,22,0) 70%),
+    repeating-conic-gradient(from 0deg at 50% 40%, #4A2416 0deg 8deg, #55291A 8deg 16deg);
+}
+.cream-burst {
+  background:
+    radial-gradient(circle at 50% 50%, #FFF3C4 0%, rgba(255,243,196,0) 70%),
+    repeating-conic-gradient(from 0deg at 50% 50%, #FFE08A 0deg 10deg, #FFD66B 10deg 20deg);
+}
+
+/* Ruled greeting-card paper */
+.ruled {
+  background-image: linear-gradient(transparent 29px, #8A5A2B 29px, #8A5A2B 30px, transparent 30px);
+  background-size: 100% 30px;
+  line-height: 30px;
+}
+.paper {
+  background: linear-gradient(135deg, #F7F7FD 0%, #E9EAF4 60%, #F4F4FB 100%);
+}
+
+/* Memory flip */
+.flip { perspective: 600px; }
+.flip-inner { transition: transform .45s; transform-style: preserve-3d; position: relative; }
+.flip-inner.on { transform: rotateY(180deg); }
+.flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display:flex; align-items:center; justify-content:center; }
+.flip-back { transform: rotateY(180deg); }
+
+@keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+.floaty { animation: floaty 3.2s ease-in-out infinite; }
+@keyframes steam { 0% { opacity:0; transform: translateY(6px) scaleX(.9) } 40% { opacity:.8 } 100% { opacity:0; transform: translateY(-18px) scaleX(1.1) } }
+.steam { animation: steam 3s ease-out infinite; }
+@keyframes sway { 0%,100% { transform: rotate(-2deg) } 50% { transform: rotate(2deg) } }
+.sway { animation: sway 4s ease-in-out infinite; transform-origin: top center; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+}
 .no-scrollbar::-webkit-scrollbar { display: none; }

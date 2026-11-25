@@ -1,18 +1,42 @@
+import { useState } from "react";
 import TurkeyTrot from "../games/TurkeyTrot";
 import HarvestCatch from "../games/HarvestCatch";
 import GobbleMemory from "../games/GobbleMemory";
 import GratitudeQuest from "../games/GratitudeQuest";
+import { Bunting, Pumpkin, Sunflower } from "./Art";
+import { sfx } from "../lib/sound";
+
+const GAMES = [
+  { id: "trot", label: "Turkey Trot", icon: "🦃", blurb: "Jump the pumpkins", C: TurkeyTrot },
+  { id: "catch", label: "Harvest Catch", icon: "🧺", blurb: "Catch falling harvest", C: HarvestCatch },
+  { id: "memory", label: "Gobble Memory", icon: "🃏", blurb: "Match the pairs", C: GobbleMemory },
+  { id: "quest", label: "Gratitude Jar", icon: "🫙", blurb: "Fill it with thanks", C: GratitudeQuest },
+];
 
 export default function Arcade() {
+  const [active, setActive] = useState("trot");
+  const G = GAMES.find((g) => g.id === active)!;
   return (
-    <section id="arcade" className="relative py-20 px-6 max-w-6xl mx-auto">
-      <h2 className="font-display text-4xl md:text-5xl text-center text-burnt mb-3">Thanksgiving Arcade</h2>
-      <p className="text-center text-brown/70 mb-12 max-w-lg mx-auto">Four games. One warm season. Play alone or share the fun.</p>
-      <div className="grid gap-6 md:grid-cols-2">
-        <TurkeyTrot />
-        <HarvestCatch />
-        <GobbleMemory />
-        <GratitudeQuest />
+    <section id="arcade" className="sunburst relative py-24 px-5 overflow-hidden">
+      <Bunting className="absolute top-0 left-0 w-full h-14 sway" />
+      <Sunflower className="absolute top-24 -left-6 w-24 opacity-90" />
+      <Pumpkin tone="orange" className="absolute bottom-0 -right-6 w-40 opacity-95" />
+      <div className="relative max-w-3xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="font-script text-cocoa text-5xl md:text-6xl">Game Time</h2>
+          <p className="font-block tracking-[0.3em] text-tomato text-sm mt-1">PICK A GAME · PLAY A LITTLE</p>
+        </div>
+        <div role="tablist" className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5">
+          {GAMES.map((g) => (
+            <button key={g.id} role="tab" aria-selected={g.id === active} onClick={() => { sfx.click(); setActive(g.id); }}
+              className={`rounded-2xl px-3 py-3 text-center transition border-2 ${g.id === active ? "bg-cocoa text-butter border-cocoa shadow-panel -translate-y-0.5" : "bg-butter/80 text-cocoa border-cocoa/20 hover:bg-butter"}`}>
+              <div className="text-2xl">{g.icon}</div>
+              <div className="font-block tracking-wider text-sm mt-0.5">{g.label.toUpperCase()}</div>
+              <div className={`text-[10px] ${g.id === active ? "text-butter/70" : "text-cocoa/60"}`}>{g.blurb}</div>
+            </button>
+          ))}
+        </div>
+        <G.C key={active} />
       </div>
     </section>
   );

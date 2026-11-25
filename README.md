@@ -1,9 +1,13 @@
-# Thanksgiving — A Season of Gratitude
+# Thanksgiving 2026 — Let's Be Grateful
 
 React + TypeScript + Tailwind + GSAP. Fully static.
 
+UI follows the sunburst story-poster style and the printed "Dear / From" Thanksgiving card.
+Greeting cards are in `src/data/messages.ts` (sender name: `SENDER`).
+Games live in `src/games/`, shown in one tabbed console (`src/components/Arcade.tsx`).
+
 ## Replace the photo
-Overwrite `src/assets/photo.jpg` with your own photo (square works best, keep the same filename).
+Overwrite `src/assets/photo.jpg` (square works best, same filename).
 
 ## Run locally
 npm install
@@ -11,4 +15,3 @@ npm run dev
 
 ## Deploy to Vercel
 Push to GitHub → import in Vercel → Framework preset: Vite → Deploy.
-(Build command: `npm run build`, output directory: `dist` — auto-detected.)

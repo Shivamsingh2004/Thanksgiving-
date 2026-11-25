@@ -1,44 +1,52 @@
 import { useEffect, useRef, useState } from "react";
-import GameCard from "../components/GameCard";
+import GameScreen, { Overlay } from "../components/GameScreen";
 import { sfx } from "../lib/sound";
 
 type Item = { id: number; x: number; y: number; emoji: string };
-const EMOJIS = ["🍎", "🌽", "🍂", "🎃", "🍇"];
+const EMOJIS = ["🍎", "🌽", "🍂", "🎃", "🍇", "🥧"];
 
 export default function HarvestCatch() {
-  const [items, setItems] = useState<Item[]>([]);
+  const [, setTick] = useState(0);
   const [score, setScore] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [basketX, setBasketX] = useState(45);
-  const basket = useRef(45);
+  const [best, setBest] = useState(0);
+  const [lives, setLives] = useState(3);
+  const [state, setState] = useState<"idle" | "play" | "over">("idle");
+  const items = useRef<Item[]>([]);
+  const basket = useRef(44);
   const id = useRef(0);
+  const sc = useRef(0);
+  const lv = useRef(3);
 
-  const moveBasket = (v: number) => {
-    basket.current = Math.max(0, Math.min(88, v));
-    setBasketX(basket.current);
+  const moveBasket = (v: number) => { basket.current = Math.max(0, Math.min(86, v)); setTick((t) => t + 1); };
+
+  const start = () => {
+    items.current = []; sc.current = 0; lv.current = 3;
+    setScore(0); setLives(3); setState("play");
   };
 
   useEffect(() => {
-    if (!playing) return;
+    if (state !== "play") return;
     const spawn = setInterval(() => {
-      setItems((p) => [...p, { id: id.current++, x: Math.random() * 88, y: 0, emoji: EMOJIS[(Math.random() * EMOJIS.length) | 0] }]);
-    }, 700);
+      items.current.push({ id: id.current++, x: Math.random() * 86, y: -8, emoji: EMOJIS[(Math.random() * EMOJIS.length) | 0] });
+    }, Math.max(380, 750 - sc.current * 12));
     const fall = setInterval(() => {
-      setItems((prev) => {
-        let caught = 0;
-        const next = prev.map((it) => ({ ...it, y: it.y + 6 })).filter((it) => {
-          if (it.y > 80) {
-            if (Math.abs(it.x - basket.current) < 14) caught++;
-            return false;
-          }
-          return true;
-        });
-        if (caught) { setTimeout(() => { setScore((s) => s + caught); sfx.pop(); }, 0); }
-        return next;
-      });
-    }, 60);
+      const speed = 3 + Math.min(sc.current * 0.12, 3);
+      const keep: Item[] = [];
+      for (const it of items.current) {
+        const ny = it.y + speed;
+        if (ny > 78) {
+          if (Math.abs(it.x - basket.current) < 14) { sc.current += 1; setScore(sc.current); setBest((b) => Math.max(b, sc.current)); sfx.pop(); }
+          else { lv.current -= 1; setLives(lv.current); sfx.lose(); }
+          continue;
+        }
+        keep.push({ ...it, y: ny });
+      }
+      items.current = keep;
+      if (lv.current <= 0) { setState("over"); }
+      setTick((t) => t + 1);
+    }, 50);
     return () => { clearInterval(spawn); clearInterval(fall); };
-  }, [playing]);
+  }, [state]);
 
   useEffect(() => {
     const k = (e: KeyboardEvent) => {
@@ -52,26 +60,21 @@ export default function HarvestCatch() {
   }, []);
 
   return (
-    <GameCard title="Harvest Catch 🧺" subtitle="Drag or use ← → to catch falling harvest.">
-      <div
-        className="relative h-56 bg-burnt/30 rounded-xl overflow-hidden touch-none select-none"
-        onPointerMove={(e) => {
-          const r = e.currentTarget.getBoundingClientRect();
-          moveBasket(((e.clientX - r.left) / r.width) * 100 - 6);
-        }}
-      >
-        {items.map((it) => (
+    <GameScreen
+      stats={[{ label: "CAUGHT", value: score }, { label: "LIVES", value: "❤".repeat(Math.max(lives, 0)) || "—" }, { label: "BEST", value: best }]}
+      hint="Drag or use ← → to move the basket"
+    >
+      <div className="relative h-64 touch-none select-none overflow-hidden"
+        style={{ background: "linear-gradient(#FFE9A8, #FFD66B)" }}
+        onPointerMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); moveBasket(((e.clientX - r.left) / r.width) * 100 - 7); }}>
+        <div className="absolute bottom-0 inset-x-0 h-6 bg-[#7FA337]" />
+        {items.current.map((it) => (
           <span key={it.id} className="absolute text-2xl" style={{ left: `${it.x}%`, top: `${it.y}%` }}>{it.emoji}</span>
         ))}
-        <span className="absolute bottom-1 text-3xl" style={{ left: `${basketX}%` }}>🧺</span>
-        {!playing && <div className="absolute inset-0 flex items-center justify-center text-sm text-cream/80">Press Start</div>}
+        <span className="absolute bottom-3 text-4xl" style={{ left: `${basket.current}%` }}>🧺</span>
+        {state === "idle" && <Overlay title="Harvest Catch" sub="Catch the harvest. Miss three and it's over." button="START" onClick={start} />}
+        {state === "over" && <Overlay title="Basket's full!" sub={`You caught ${score}.`} button="PLAY AGAIN" onClick={start} />}
       </div>
-      <div className="flex items-center justify-between mt-3 text-sm">
-        <span>Caught: {score}</span>
-        <button onClick={() => { setScore(0); setItems([]); setPlaying(true); }} className="bg-gold text-brown px-4 py-1.5 rounded-full font-semibold">
-          {playing ? "Restart" : "Start"}
-        </button>
-      </div>
-    </GameCard>
+    </GameScreen>
   );
 }
