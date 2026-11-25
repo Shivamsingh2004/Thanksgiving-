@@ -26,7 +26,7 @@ export default function GratitudeQuest() {
 
   return (
     <GameScreen stats={[{ label: "NOTES", value: `${entries.length}/${PROMPTS.length}` }, { label: "JAR", value: `${Math.round(fill)}%` }]} hint="Answer five prompts to fill the jar">
-      <div className="relative cream-burst p-4 sm:p-5 grid sm:grid-cols-[130px_1fr] gap-4 items-center min-h-[16rem]">
+      <div className="relative bg-white/25 p-4 sm:p-5 grid sm:grid-cols-[130px_1fr] gap-4 items-center min-h-[16rem]">
         <svg viewBox="0 0 100 130" className="w-28 mx-auto" aria-hidden>
           <defs><clipPath id="jar"><path d="M22 28 H78 V40 C92 50 92 70 90 100 C88 120 80 124 50 124 C20 124 12 120 10 100 C8 70 8 50 22 40Z" /></clipPath></defs>
           <rect x="26" y="8" width="48" height="20" rx="5" fill="#C99A2E" />

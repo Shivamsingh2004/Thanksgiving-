@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "../hooks/useReducedMotion";
-import { Sunflower, Pumpkin, Leaf } from "./Art";
+import { Sunflower, Pumpkin } from "./Art";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Intro() {
@@ -17,19 +17,16 @@ export default function Intro() {
     return () => ctx.revert();
   }, [reduced]);
   return (
-    <section ref={ref} className="sunburst-dark relative py-28 px-6 text-center overflow-hidden">
-      <Pumpkin tone="orange" className="absolute -top-4 -left-6 w-36 md:w-52 rotate-[-8deg]" />
-      <Sunflower className="absolute top-3 right-[18%] w-20 md:w-28" />
-      <Sunflower className="absolute top-16 right-[6%] w-14 md:w-20" />
-      <Leaf tone="green" className="absolute w-5 left-[22%] top-[45%] rotate-45" />
-      <Leaf tone="orange" className="absolute w-5 right-[24%] bottom-[22%] -rotate-12" />
-      <Pumpkin tone="mustard" className="absolute -bottom-3 -right-4 w-32 md:w-44" />
-
-      <div className="relative max-w-2xl mx-auto">
+    <section ref={ref} className="relative py-28 px-5">
+      <div className="relative max-w-2xl mx-auto glass-dark rounded-[32px] px-6 py-14 text-center">
+        <Sunflower className="absolute -top-8 -left-6 w-24 md:w-32" />
+        <Sunflower className="absolute -top-6 -right-5 w-20 md:w-28" />
+        <Pumpkin tone="orange" className="absolute -bottom-8 -left-4 w-28 md:w-36" />
+        <Pumpkin tone="mustard" className="absolute -bottom-6 -right-4 w-24 md:w-32" />
         <p className="intro-line font-script text-butter text-5xl md:text-6xl">It's time to</p>
         <p className="intro-line font-block text-tomato text-6xl md:text-8xl tracking-wide leading-none mt-1">GIVE THANKS</p>
-        <p className="intro-line mt-8 text-butter/85 md:text-lg max-w-lg mx-auto">
-          Thanksgiving is a quiet invitation to pause, look around, and say thank you — to the helpers, the teachers, the bright ones.
+        <p className="intro-line mt-8 text-butter/90 md:text-lg max-w-lg mx-auto">
+          Thanksgiving is a quiet invitation to pause, look around, and say thank you.
         </p>
       </div>
     </section>

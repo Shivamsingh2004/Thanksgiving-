@@ -126,3 +126,63 @@ export function BrandRow({ dark = false }: { dark?: boolean }) {
     </div>
   );
 }
+
+/* ---------- Extra props for the "Welcome" hero ---------- */
+export function Umbrella({ className, style }: P) {
+  return (
+    <svg viewBox="0 0 200 150" className={className} style={style} aria-hidden>
+      <path d="M100 30 V140" stroke="#8A4416" strokeWidth="5" strokeLinecap="round" />
+      <path d="M100 140 q0 8 -9 8" stroke="#8A4416" strokeWidth="5" fill="none" strokeLinecap="round" />
+      <path d="M8 80 C14 30 70 8 100 8 C130 8 186 30 192 80 C176 66 160 66 146 80 C132 66 116 66 100 80 C84 66 68 66 54 80 C40 66 24 66 8 80Z" fill="#E5483B" />
+      <path d="M100 8 C80 28 72 54 78 76 C86 70 94 72 100 80 C106 72 114 70 122 76 C128 54 120 28 100 8Z" fill="#F28A1E" />
+      <path d="M100 8 V80" stroke="#8A4416" strokeOpacity=".35" strokeWidth="2" />
+    </svg>
+  );
+}
+export function Grapes({ className, style }: P) {
+  const pts: [number, number][] = [[20,18],[40,18],[60,18],[30,36],[50,36],[40,54],[30,72]].slice(0,6) as [number, number][];
+  return (
+    <svg viewBox="0 0 80 100" className={className} style={style} aria-hidden>
+      <path d="M40 2 V16" stroke="#4A3A22" strokeWidth="4" strokeLinecap="round" />
+      <path d="M40 8 C54 0 66 6 66 6 C62 18 50 18 40 10Z" fill="#7FA337" />
+      {[[22,26],[42,26],[62,26],[32,44],[52,44],[22,62],[42,62],[62,62],[32,80],[52,80],[42,96]].map(([x,y],i)=>(
+        <circle key={i} cx={x} cy={y-4} r="10" fill={i%2?"#7B3FA0":"#8E4DB3"} />
+      ))}
+      {pts.length === 0 && null}
+    </svg>
+  );
+}
+export function Apple({ className, style }: P) {
+  return (
+    <svg viewBox="0 0 70 70" className={className} style={style} aria-hidden>
+      <path d="M35 14 C35 6 40 3 46 3" stroke="#4A3A22" strokeWidth="4" fill="none" strokeLinecap="round" />
+      <path d="M35 18 C20 6 2 18 6 40 C10 62 26 66 35 60 C44 66 60 62 64 40 C68 18 50 6 35 18Z" fill="#E5483B" />
+      <path d="M18 28 C14 34 14 42 18 48" stroke="#fff" strokeOpacity=".4" strokeWidth="4" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+/** Sunflower on a stem with two leaves, for the hero sides. */
+export function SunflowerStem({ className, style }: P) {
+  return (
+    <svg viewBox="0 0 100 260" className={className} style={style} aria-hidden>
+      <path d="M50 70 V260" stroke="#5E7F25" strokeWidth="6" strokeLinecap="round" />
+      <path d="M50 190 C20 190 10 170 8 150 C34 150 48 166 50 190Z" fill="#7FA337" />
+      <path d="M50 220 C80 220 92 200 94 180 C68 180 52 196 50 220Z" fill="#7FA337" />
+      <svg x="0" y="0" width="100" height="100" viewBox="0 0 100 100">
+        {Array.from({ length: 14 }, (_, i) => i * (360 / 14)).map((r) => (
+          <ellipse key={r} cx="50" cy="20" rx="8" ry="17" fill="#FDB022" transform={`rotate(${r} 50 50)`} />
+        ))}
+        <circle cx="50" cy="50" r="17" fill="#8A4416" /><circle cx="50" cy="50" r="10" fill="#5E2F1C" />
+      </svg>
+    </svg>
+  );
+}
+/** Turkey holding an umbrella (story panel 3). */
+export function TurkeyUmbrella({ className }: { className?: string }) {
+  return (
+    <div className={`relative ${className ?? ""}`}>
+      <Umbrella className="absolute -top-[34%] left-[18%] w-[66%] z-10 rotate-[8deg]" />
+      <Turkey hat={false} className="relative w-full" />
+    </div>
+  );
+}

@@ -2,7 +2,7 @@
 
 React + TypeScript + Tailwind + GSAP. Fully static.
 
-UI follows the sunburst story-poster style and the printed "Dear / From" Thanksgiving card.
+Glass UI on a sunflower + pumpkin sunburst. Hero follows story panel #3. Pick a name to open only that person's note.
 Greeting cards are in `src/data/messages.ts` (sender name: `SENDER`).
 Games live in `src/games/`, shown in one tabbed console (`src/components/Arcade.tsx`).
 

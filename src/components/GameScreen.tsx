@@ -6,16 +6,16 @@ export type Stat = { label: string; value: string | number };
 /** Arcade-style screen: HUD on top, framed stage, hint bar below. */
 export default function GameScreen({ stats, hint, children }: { stats: Stat[]; hint: string; children: ReactNode }) {
   return (
-    <div className="rounded-[28px] bg-cocoa p-3 sm:p-4 shadow-panel border-4 border-sun">
+    <div className="glass-dark rounded-[28px] p-3 sm:p-4">
       <div className="flex items-stretch gap-2 mb-3">
         {stats.map((s) => (
-          <div key={s.label} className="flex-1 bg-cocoa2 rounded-xl px-3 py-1.5 text-center">
+          <div key={s.label} className="flex-1 bg-white/15 border border-white/25 rounded-xl px-3 py-1.5 text-center">
             <div className="font-block tracking-[0.25em] text-[10px] text-sunlight/80">{s.label}</div>
             <div className="font-block text-xl text-butter leading-tight">{s.value}</div>
           </div>
         ))}
       </div>
-      <div onPointerDown={() => sfx.pop()} className="relative rounded-2xl overflow-hidden border-2 border-cocoa2 bg-butter">
+      <div onPointerDown={() => sfx.pop()} className="relative rounded-2xl overflow-hidden border border-white/40 bg-white/10">
         {children}
       </div>
       <p className="mt-3 text-center text-[11px] tracking-widest uppercase text-sunlight/70 font-block">{hint}</p>

@@ -3,7 +3,7 @@ import TurkeyTrot from "../games/TurkeyTrot";
 import HarvestCatch from "../games/HarvestCatch";
 import GobbleMemory from "../games/GobbleMemory";
 import GratitudeQuest from "../games/GratitudeQuest";
-import { Bunting, Pumpkin, Sunflower } from "./Art";
+import { Pumpkin, Sunflower } from "./Art";
 import { sfx } from "../lib/sound";
 
 const GAMES = [
@@ -17,10 +17,9 @@ export default function Arcade() {
   const [active, setActive] = useState("trot");
   const G = GAMES.find((g) => g.id === active)!;
   return (
-    <section id="arcade" className="sunburst relative py-24 px-5 overflow-hidden">
-      <Bunting className="absolute top-0 left-0 w-full h-14 sway" />
-      <Sunflower className="absolute top-24 -left-6 w-24 opacity-90" />
-      <Pumpkin tone="orange" className="absolute bottom-0 -right-6 w-40 opacity-95" />
+    <section id="arcade" className="relative py-24 px-5">
+      <Sunflower className="absolute top-16 -left-2 w-24" />
+      <Pumpkin tone="orange" className="absolute bottom-6 -right-2 w-32" />
       <div className="relative max-w-3xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="font-script text-cocoa text-5xl md:text-6xl">Game Time</h2>
@@ -29,7 +28,7 @@ export default function Arcade() {
         <div role="tablist" className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5">
           {GAMES.map((g) => (
             <button key={g.id} role="tab" aria-selected={g.id === active} onClick={() => { sfx.click(); setActive(g.id); }}
-              className={`rounded-2xl px-3 py-3 text-center transition border-2 ${g.id === active ? "bg-cocoa text-butter border-cocoa shadow-panel -translate-y-0.5" : "bg-butter/80 text-cocoa border-cocoa/20 hover:bg-butter"}`}>
+              className={`rounded-2xl px-3 py-3 text-center transition border-2 ${g.id === active ? "bg-cocoa text-butter border-cocoa shadow-panel -translate-y-0.5" : "glass text-cocoa hover:bg-white/60"}`}>
               <div className="text-2xl">{g.icon}</div>
               <div className="font-block tracking-wider text-sm mt-0.5">{g.label.toUpperCase()}</div>
               <div className={`text-[10px] ${g.id === active ? "text-butter/70" : "text-cocoa/60"}`}>{g.blurb}</div>

@@ -41,7 +41,7 @@ export default function GobbleMemory() {
 
   return (
     <GameScreen stats={[{ label: "MOVES", value: moves }, { label: "PAIRS", value: `${pairs}/6` }, { label: "BEST", value: best || "—" }]} hint="Flip two cards — match all six pairs">
-      <div className="relative cream-burst p-4">
+      <div className="relative bg-white/25 p-4">
         <div className="grid grid-cols-4 gap-2.5 max-w-md mx-auto">
           {deck.map((c, i) => {
             const on = c.flipped || c.done;
