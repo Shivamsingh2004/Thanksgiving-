@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+body { @apply bg-cream text-brown font-body antialiased; background-image: radial-gradient(circle at 20% 0%, #FFE7BE 0%, transparent 55%), radial-gradient(circle at 90% 30%, #FFD9A0 0%, transparent 50%); }
+.font-display { font-family: 'Playfair Display', serif; }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+.no-scrollbar::-webkit-scrollbar { display: none; }
